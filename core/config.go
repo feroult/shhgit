@@ -1,12 +1,7 @@
 package core
 
 import (
-	"errors"
-	"io/ioutil"
 	"os"
-	"path"
-	"strings"
-
 	"gopkg.in/yaml.v3"
 )
 
@@ -30,8 +25,7 @@ type ConfigSignature struct {
 func ParseConfig() (*Config, error) {
 	config := &Config{}
 
-	dir, _ := os.Getwd()
-	data, err := ioutil.ReadFile(path.Join(dir, "config.yaml"))
+	data, err := GetConfigYaml()
 	if err != nil {
 		return config, err
 	}
@@ -59,10 +53,6 @@ func (c *Config) UnmarshalYAML(unmarshal func(interface{}) error) error {
 
 	if err != nil {
 		return err
-	}
-
-	if len(c.GitHubAccessTokens) < 1 || strings.TrimSpace(strings.Join(c.GitHubAccessTokens, "")) == "" {
-		return errors.New("You need to provide at least one GitHub Access Token. See https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line")
 	}
 
 	return nil

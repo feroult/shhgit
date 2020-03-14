@@ -56,6 +56,9 @@ func (s *Session) InitSignatures() {
 }
 
 func (s *Session) InitGitHubClients() {
+	if s.Config.GitHubAccessTokens[0] == "" {
+		return
+	}
 	for _, token := range s.Config.GitHubAccessTokens {
 		ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: token})
 		tc := oauth2.NewClient(s.Context, ts)

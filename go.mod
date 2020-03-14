@@ -1,4 +1,4 @@
-module github.com/eth0izzle/shhgit
+module github.com/feroult/shhgit
 
 go 1.14
 
